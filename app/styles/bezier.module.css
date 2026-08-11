@@ -68,3 +68,11 @@
         offset-distance: var(--end-offset);
     }
 }
+
+.external_container {
+    border: 2px var(--border-color) solid;
+    border-radius: 10px;
+    background-color: var(--card-color);
+    position: absolute;
+    z-index: -1;
+}

@@ -8,6 +8,7 @@ interface BezierLineInterface {
     startY: number;
     endX: number;
     endY: number;
+    step: number;
     vertical?: boolean;
     reversed?: boolean;
 }
@@ -17,6 +18,7 @@ const BezierLine = ({
     startY,
     endX,
     endY,
+    step,
     vertical,
     reversed
 }: BezierLineInterface) => {
@@ -81,6 +83,7 @@ const BezierLine = ({
 
     const path = `M ${pointStartX} ${pointStartY} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${pointEndX} ${pointEndY}`;
 
+    const s = step / 2.3;
     return (
         <div ref={ref} className={style.cont}>
             <svg
@@ -113,6 +116,16 @@ const BezierLine = ({
                 style={{ top: endY, left: endX }}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
+            />
+
+            <div
+                className={style.external_container}
+                style={{
+                    top: (reversed ? endY : startY) - (s / 2 + 2),
+                    left: reversed ? endX - 1 : startX - 53,
+                    width: '50px',
+                    height: s
+                }}
             />
 
             <div

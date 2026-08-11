@@ -11,6 +11,7 @@ const Connects = () => {
         w: number;
         h: number;
     }>({ x: 0, y: 0, w: 0, h: 0 });
+    const [stepSize, setStepSize] = useState<number>(0);
 
     const updateCont = () => {
         let el = document.getElementById('animated') as HTMLDivElement;
@@ -37,11 +38,10 @@ const Connects = () => {
     };
 
     const generatePointsY = (h: number) => {
+        const min = h / 10;
+        const max = h - min;
+        const step = (max - min) / 3;
         const get = () => {
-            const min = h / 10;
-            const max = h - min;
-            const step = (max - min) / 3;
-
             const randomY = Array.from(
                 { length: 3 },
                 (_, i) => min + i * step + Math.random() * (step - 80)
@@ -50,6 +50,8 @@ const Connects = () => {
             randomY.sort((a, b) => a - b);
             return randomY;
         };
+
+        setStepSize(step);
         setPointsY([...get(), ...get()]);
     };
 
@@ -80,6 +82,7 @@ const Connects = () => {
                 startY={pointsY[0]}
                 endX={contSize.x + 1}
                 endY={contSize.y + contSize.h / 2 - 25}
+                step={stepSize}
             />
 
             <BezierLine
@@ -87,6 +90,7 @@ const Connects = () => {
                 startY={pointsY[1]}
                 endX={contSize.x + 1}
                 endY={contSize.y + contSize.h / 2}
+                step={stepSize}
             />
 
             <BezierLine
@@ -94,6 +98,7 @@ const Connects = () => {
                 startY={pointsY[2]}
                 endX={contSize.x + 1}
                 endY={contSize.y + contSize.h / 2 + 25}
+                step={stepSize}
             />
 
             <BezierLine
@@ -101,6 +106,7 @@ const Connects = () => {
                 startY={contSize.y + contSize.h / 2 - 25}
                 endX={windowSize[0] - 30}
                 endY={pointsY[3]}
+                step={stepSize}
                 reversed
             />
 
@@ -109,6 +115,7 @@ const Connects = () => {
                 startY={contSize.y + contSize.h / 2}
                 endX={windowSize[0] - 30}
                 endY={pointsY[4]}
+                step={stepSize}
                 reversed
             />
 
@@ -117,6 +124,7 @@ const Connects = () => {
                 startY={contSize.y + contSize.h / 2 + 25}
                 endX={windowSize[0] - 30}
                 endY={pointsY[5]}
+                step={stepSize}
                 reversed
             />
         </div>
